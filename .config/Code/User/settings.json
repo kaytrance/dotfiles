@@ -1,0 +1,62 @@
+{
+  "editor.fontFamily": "Iosevka Nerd Font",
+  "workbench.tree.indent": 12,
+  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "zenMode.hideTabs": false,
+  "terminal.integrated.fontFamily": "Iosevka SS08",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "settingsSync.keybindingsPerPlatform": false,
+  "editor.hover.delay": 500,
+  "editor.quickSuggestionsDelay": 2000,
+  "gitlens.advanced.blame.delayAfterEdit": 25000,
+  "workbench.colorTheme": "Catppuccin Macchiato",
+
+  // laptop
+  // "editor.lineHeight": 16,
+  // "editor.fontSize": 16,
+  // "editor.fontWeight": "500",
+  // "terminal.integrated.fontSize": 15,
+
+  // dual monitor
+  "editor.lineHeight": 18,
+  "editor.fontSize": 18,
+  "editor.fontWeight": "600",
+  "terminal.integrated.fontSize": 17,
+
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.persistentSessionScrollback": 1000,
+  "rest-client.enableTelemetry": false,
+  "editor.inlineSuggest.enabled": true,
+  "window.menuBarVisibility": "toggle",
+  "search.exclude": {
+    "**/cdn": true,
+    "**/storybook_static": true
+  },
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "editor.formatOnSave": true,
+  "eslint.codeActionsOnSave.rules": null,
+  "go.toolsManagement.autoUpdate": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "git.autorefresh": false,
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "files.autoSave": "afterDelay",
+  "codeium.enableConfig": {
+    "*": true,
+    "properties": true
+  }
+}

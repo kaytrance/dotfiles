@@ -1,0 +1,96 @@
+#! /bin/sh
+
+# pgrep -x sxhkd > /dev/null || sxhkd &
+pgrep -x sxhkd > /dev/null || sxhkd -c "$HOME"/.config/sxhkd/sxhkdrc &
+dunst -config $HOME/.config/dunst/dunstrc &
+nitrogen --restore &
+/usr/lib/xdg-desktop-portal &
+
+
+# picom --config $HOME/.config/picom/picom.conf &
+# /usr/lib/xdg-desktop-portal-gtk &
+# sleep 2
+# /usr/lib/xdg-desktop-portal 
+lxpolkit &
+
+
+# Dual screens at home
+if [[ $(xrandr -q | grep "DisplayPort-0 connected") ]]; then
+  xrandr --output DisplayPort-0 --primary --mode 3840x2160 --pos 0x0 --rotate normal --set underscan on \
+    --output eDP --mode 1920x1080 --pos 3840x1080 --rotate normal
+  bspc monitor DisplayPort-0 -d 1 2 3 4 5 6 7 8
+  bspc monitor eDP -d 9 10
+  bspc config right_padding 0 
+  bspc config bottom_padding 0 
+
+  bspc rule -a "Microsoft Teams - Preview" desktop='^9'
+  bspc rule -a Minecraft desktop='^2' state=floating
+  bspc rule -a "ftb-app" desktop='^2'
+
+
+  notify-send "Dual home mode enabled" ""  
+# OFFICE
+elif [[ $(xrandr -q | grep "DisplayPort-2 connected") ]]; then
+  xrandr --output eDP --mode 1920x1080 --pos 3840x1080 --rotate normal --output HDMI-A-0 --off \
+        --output DisplayPort-0 --off \
+        --output DisplayPort-1 --off \
+        --output DisplayPort-2 --primary --mode 3840x2160 --pos 0x0 --rotate normal \
+        --output DisplayPort-3 --off
+  bspc monitor DisplayPort-2 -d 1 2 3 4 5 6 7 8
+  bspc monitor eDP -d 9 10
+  notify-send "Office layout enabled" "" 
+# Just laptop
+# else
+elif [[ $(xrandr -q | grep "eDP connected") ]]; then
+  # xrandr --output eDP --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+  #   --output DisplayPort-0 --off
+
+  xrandr --output eDP --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+    --output HDMI-A-0 --off \ 
+    --output DisplayPort-0 --off
+
+    
+  bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+  bspc monitor eDP -g 1920x1080+0+0
+  
+  bspc rule -a "Microsoft Teams - Preview" desktop='^4'
+  
+  notify-send "Laptop mode enabled" ""
+else
+  notify-send "Unknown monitor configuration" ""
+fi
+
+
+
+killall -q polybar
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+polybar -q -c $HOME/.config/polybar/config.ini &
+
+
+# colors
+accent="#7f6b99"
+focused=$(xrdb -query all | grep color4 | cut -f2)
+normal=$(xrdb -query all | grep color8 | cut -f2)
+color7=$(xrdb -query all | grep color7 | cut -f2)
+color0=$(xrdb -query all | grep color0 | cut -f2)
+
+bspc config focused_border_color		"$accent"
+bspc config normal_border_color		  "$normal"
+bspc config active_border_color		  "$color7"
+bspc config presel_feedback_color		"$color0"
+bspc config urgent_border_color		  "#dd2727"
+
+bspc config border_width          2
+bspc config window_gap            10
+bspc config split_ratio           0.52
+bspc config focus_follows_pointer true
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=offs
+
+setxkbmap -layout us,ru,lv  -option "grp:caps_toggle" -variant ",winkeys" -option "grp:ctrls_toggle" &
